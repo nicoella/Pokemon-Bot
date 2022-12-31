@@ -228,4 +228,4 @@ function pokecmd(msg) {
 	}
 }
 
-client.login('secret here');
+client.login('[secret here]');
