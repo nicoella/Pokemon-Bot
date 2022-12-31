@@ -1,4 +1,4 @@
-# Pokemon-Bot
+# Pokemon Bot
 A Pokemon bot to detect the current Pokemon spawned by Pokecord. Also contains a Pokemon name guessing game.
 
 ## Usage
