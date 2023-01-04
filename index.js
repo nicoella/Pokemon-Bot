@@ -19,7 +19,7 @@ client.on('message', msg => {
 async function pokemon(msg) {
 	try {
 		var isPoke = false;
-		try { isPoke = (msg.embeds[0].title+"").includes("Wild"); } catch (err) {}
+		try { isPoke = (msg.embeds[0].title+"").includes("Info"); } catch (err) {}
 		if(msg.embeds==undefined || msg.embeds[0]==undefined || msg.embeds[0].image==undefined || !isPoke) return;
 		
 		const canvas1 = Canvas.createCanvas(475,475);
@@ -37,16 +37,17 @@ async function pokemon(msg) {
 	    	}
 	    }
 	    console.log(r+" "+g+" "+b);
-	    for(var i=0; i<921; i++) {
-	    	var split = pokejson.map[i].split(' ');
-	    	var ri = parseInt(split[0]);
-	    	var gi = parseInt(split[1]);
-	    	var bi = parseInt(split[2]);
-	    	if(Math.abs(split[0]-r)<=5 && Math.abs(split[1]-g)<=5 && Math.abs(split[2]-b)<=5) {
-	    		console.log("p!catch "+pokejson.pokenames[i]);
+		for(var i=0; i<936; i++) {
+	    	var split = pokejson.map[i].split(' - ');
+			var col = split[1].split(' ');
+	    	var ri = parseInt(col[0]);
+	    	var gi = parseInt(col[1]);
+	    	var bi = parseInt(col[2]);
+	    	if(Math.abs(col[0]-r)<=5 && Math.abs(col[1]-g)<=5 && Math.abs(col[2]-b)<=5) {
+	    		console.log("p!catch "+split[0]);
 	    		var proc = require('child_process').spawn('pbcopy');
-	    		proc.stdin.write("p!catch "+pokejson.pokenames[i]); proc.stdin.end();
-	    		msg.channel.send("||"+pokejson.pokenames[i]+"||");
+	    		proc.stdin.write("p!catch "+split[0]); proc.stdin.end();
+	    		msg.channel.send("||"+split[0]+"||");
 	    		//used to paste the pokemon into your copy and paste - put your own user id
 	    		//client.users.get("user id").send("p!catch "+pokejson.pokenames[i]);
 	    		return;
@@ -136,9 +137,9 @@ function pokecmd(msg) {
 				return;
 			}
 		}
-		var pokenumber = Math.ceil(Math.random()*(921));
+		var pokenumber = Math.ceil(Math.random()*(936));
 		msg.channel.send(new Discord.Attachment("pokemon/"+pokenumber+".png"));
-		var pokename = pokejson.pokenames[pokenumber-1];
+		var pokename = pokejson.map[pokenumber-1].split(' - ')[0];
 		curpokes.push([channel,pokename,false,""]);
 	} else if(split[1]=="end") {
 		var newcurpokes = [];
@@ -228,4 +229,4 @@ function pokecmd(msg) {
 	}
 }
 
-client.login('secret here');
+client.login('[secret here]');
